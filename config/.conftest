@@ -1,0 +1,15 @@
+# Config-file for Purp (Pugo RPM) by Anders Karlsson
+
+
+[color]
+backcol = blue
+textcol = white
+
+# Nabla
+[foo]
+name = basun
+
+abab = 4711
+
+name = basun
+name = basun

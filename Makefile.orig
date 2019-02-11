@@ -1,0 +1,128 @@
+
+.EXPORT_ALL_VARIABLES:
+
+#####################################################################
+# Set this to the destination-directory for Purp
+#####################################################################
+SBINDIR = $(BUILDROOT)/usr/sbin
+MANDIR = $(BUILDROOT)/usr/share/man
+SYSCONFDIR = $(BUILDROOT)/etc
+
+
+#####################################################################
+# Uncomment the correct RPM-version (i.e. uncomment RPM_VERSION_303
+# if you have RPM version 3.0.3 installed)
+#####################################################################
+
+#RPM_VERSION=303
+#RPM_VERSION=304
+#RPM_VERSION=400
+RPM_VERSION=402
+
+
+#####################################################################
+# Uncomment -DDEBUG_TO_TERM to enable functions that send debug-info 
+# to a term-device. The device is selected by the --debug <device>
+# argument on the commandline.
+#####################################################################
+DEBUG        = -DDEBUG_TO_TERM -ggdb #-DDEBUG_SEE_KEY_EVENTS
+
+DEFINES      = ${DEBUG} -DRPM_VERSION=${RPM_VERSION}
+
+CC           = c++
+LINK	     = $(CC)
+O            = -O2 -pipe
+
+INCPATHS     = -I/usr/include -I/usr/include/ncurses -I/usr/include/rpm
+INCLUDES     =
+
+LIBPATHS     = -L/lib -L/usr/local/lib -L/usr/lib
+
+ifeq ($(RPM_VERSION), 303)
+	LIBS         = -lrpm -lncurses -lz -ldb1 -lfl -lpopt #-lefence
+endif
+
+ifeq ($(RPM_VERSION), 304)
+	LIBS         = -lrpm -lncurses -lz -ldb1 -lfl -lpopt #-lefence
+endif
+
+ifeq ($(RPM_VERSION), 400)
+	LIBS         = -lrpm -lrpmio -lncurses -lz -ldb1 -lfl -lpopt #-lefence
+endif
+
+ifeq ($(RPM_VERSION), 402)
+	LIBS         = -lrpm -lrpmio -lncurses -lz -ldb1 -lfl -lpopt #-lefence
+endif
+
+CFLAGS       = $(O) $(DEFINES) $(INCPATHS) $(INCLUDES)
+LFLAGS       = $(LIBPATHS) $(LIBS)
+
+
+## Objects ################################################
+
+CONFIG =  config/y.tab.o \
+	  config/lex.yy.o \
+          config/confclass.o
+
+
+
+OBJECTS = main.o \
+          mainloop.o \
+          tools.o \
+          linklist.o \
+          dir.o \
+          textwindow.o \
+          install.o \
+	  window.o \
+	  panel.o \
+	  progresswindow.o \
+	  rpmprogress.o \
+          cmdwindow.o \
+	  pathwindow.o \
+	  infowindow.o \
+	  pcurses.o \
+	  text.o \
+	  list.o 
+
+TARGET =  purp
+
+
+## Implicit rules #########################################
+
+.SUFFIXES: .cpp .c
+
+.cpp.o:
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(INCPATHS) -o $@ $<
+
+
+## Build rules ############################################
+
+
+all: config $(TARGET)
+	 
+
+$(TARGET): $(OBJECTS) $(CONFIG)
+	$(CC) $(OBJECTS) $(CONFIG) -o $(TARGET) $(LFLAGS)
+
+
+config::
+	make -C config
+
+clean:
+	rm -f *.o *.bak *BAK *~ *% #* 
+	rm -f $(TARGET)
+	rm -f core*
+	make -C config clean
+
+install:
+	install -m 755 -s $(TARGET) $(SBINDIR)
+	install -m 644 purp.8 $(MANDIR)/man8
+	install -m 644 purprc $(SYSCONFDIR)
+
+
+count:
+	@echo -n "        Header files (lines): "; cat *.h config/*.h | wc -l;
+	@echo -n "Implementation files (lines): "; cat *.c* config/*.c* | wc -l

@@ -1,0 +1,33 @@
+==============================================================================
+ PURP (Pugo RPM) Version 1.1.0 - A ncurses-based RPM-handler
+ Copyright (C) 1998-2001 -- Anders Karlsson <pugo@lysator.liu.se>
+==============================================================================
+
+======================
+ Installation of Purp
+======================
+
+1. Get the compressed source package.
+
+2. Uncompress and untar the source package:
+      "gunzip purp-x.y.tgz"   (where x.y is current version)
+      "tar xf purp-x.y.tar"
+      
+3. Go to the Purp-dir:
+      "cd purp"
+      
+4. Build Make files:
+      "./configure"
+
+5. Build the Purp-binary:
+      "make"
+     
+6. If the build goes well you now have a binary "purp". 
+
+7. Install the binary:
+      "make install"
+     
+8. Read the file 'README', which you ofcourse did before
+   you installed Purp. 
+   
+9. Send bug-reports to <pugo@lysator.liu.se>.

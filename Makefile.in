@@ -1,0 +1,123 @@
+
+.EXPORT_ALL_VARIABLES:
+
+#####################################################################
+# Variables
+#####################################################################
+SHELL = @SHELL@
+VPATH = @srcdir@
+
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+sysconfdir = @sysconfdir@
+bindir = @bindir@
+sbindir = @sbindir@
+infodir = @infodir@
+libdir = @libdir@
+mandir = @mandir@
+
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@
+
+
+LIBTOOL = @LIBTOOL@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+INSTALL = @INSTALL@
+
+LIBS := $(LIBS)-lrpm
+
+
+
+#####################################################################
+# Uncomment -DDEBUG_TO_TERM to enable functions that send debug-info 
+# to a term-device. The device is selected by the --debug <device>
+# argument on the commandline.
+#####################################################################
+DEBUG        = #-DDEBUG_TO_TERM -ggdb #-DDEBUG_SEE_KEY_EVENTS
+DEFINES      = ${DEBUG}
+
+
+INCPATHS     = -I/usr/include -I/usr/include/ncurses -I/usr/include/rpm
+LIBPATHS     = -L/lib -L/usr/local/lib -L/usr/lib
+
+
+CFLAGS       = $(O) $(DEFINES) $(INCPATHS) $(INCLUDES)
+LFLAGS       = $(LIBPATHS) $(LIBS)
+
+
+## Objects ################################################
+
+CONFIG =  config/y.tab.o \
+	  config/lex.yy.o \
+          config/confclass.o
+
+
+
+OBJECTS = main.o \
+          mainloop.o \
+          tools.o \
+          linklist.o \
+          dir.o \
+          textwindow.o \
+          install.o \
+	  window.o \
+	  panel.o \
+	  progresswindow.o \
+	  rpmprogress.o \
+          cmdwindow.o \
+	  pathwindow.o \
+	  infowindow.o \
+	  pcurses.o \
+	  text.o \
+	  list.o 
+
+TARGET =  purp
+
+
+## Implicit rules #########################################
+
+.SUFFIXES: .cpp .c
+
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATHS) $(DEFINES) -o $@ $<
+
+.c.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATHS) $(DEFINES) -o $@ $<
+
+
+## Build rules ############################################
+
+
+all: config $(TARGET)
+
+
+$(TARGET): $(OBJECTS) $(CONFIG)
+	$(CXX) $(OBJECTS) $(CONFIG) -o $(TARGET) $(LFLAGS)
+
+
+config::
+	make -C config
+
+clean:
+	rm -f *.o *.bak *BAK *~ *% #* 
+	rm -f $(TARGET)
+	rm -f core*
+	rm -f config.cache config.log
+	make -C config clean
+
+dist:	
+	make clean
+	rm -f Makefile
+
+install:
+	install -m 755 -s $(TARGET) $(BUILDROOT)/$(bindir)
+	install -m 644 purp.8 $(BUILDROOT)/$(mandir)/man8
+	install -m 644 purprc $(BUILDROOT)/$(sysconfdir)
+
+
+count:
+	@echo -n "        Header files (lines): "; cat *.h config/*.h | wc -l;
+	@echo -n "Implementation files (lines): "; cat *.c* config/*.c* | wc -l

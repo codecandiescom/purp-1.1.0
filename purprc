@@ -1,0 +1,35 @@
+# Config-file for Purp (Pugo RPM) by Anders Karlsson
+# 
+# Observe that the [group]-lines aren't used yet! But they will be
+# if the config-file grows bigger in the future (which it will)!
+
+[color]
+
+# Available colors:
+#   black      blue
+#   red        magenta
+#   green      cyan
+#   yellow     white
+
+# These are the default colors:
+#
+#textcolor = white
+#backcolor = blue
+#menucolor = green
+#markcolor = green
+#dialogtextcolor = white
+#dialogbackcolor = black
+
+
+[other]
+
+# Uncomment to show all packages in the right panel, i.e. also the 
+# installed ones. They will be displayed in dimmed color (if possible) 
+# and with a paranthesis around the name.
+
+#showall = true
+
+
+# Uncomment to suppress dimmed color.
+
+#dimmed = false

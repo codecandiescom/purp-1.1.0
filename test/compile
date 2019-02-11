@@ -1,0 +1,2 @@
+g++ -O2 list_all.cpp -lrpm -lrpmio -lpopt -o list_all
+g++ -O2 list_name.cpp -lrpm -lrpmio -lpopt -o list_name

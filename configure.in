@@ -1,0 +1,49 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_PREREQ(2.2)
+AC_INIT(main.cpp)
+AC_CONFIG_HEADER(config.h)
+
+dnl Checks for programs.
+AC_PROG_CXX
+AC_PROG_LEX
+AC_PROG_MAKE_SET
+AC_PROG_YACC
+
+dnl Checks for libraries.
+AC_CHECK_LIB(db1, dbm_open)
+AC_CHECK_LIB(fl, main)
+AC_CHECK_LIB(ncurses, initscr)
+AC_CHECK_LIB(popt, poptGetArgs)
+AC_CHECK_LIB(z, inflate)
+
+dnl ## Check installed RPM version
+
+
+AC_TRY_CPP( [#include <rpm/rpmlog.h>],
+	    [LIBS="-lrpmio $LIBS"; AC_DEFINE_UNQUOTED(RPM_VERSION, 402)],
+   AC_CHECK_LIB(rpmio, Fopen, 
+		       [LIBS="-lrpmio $LIBS"; 
+		        AC_DEFINE_UNQUOTED(RPM_VERSION, 400)],
+      AC_CHECK_LIB(rpm, rpmRunTransactions,
+			[AC_DEFINE_UNQUOTED(RPM_VERSION, 304)],
+         AC_CHECK_LIB(rpm, rpmdbFindByTriggeredBy,
+			[AC_DEFINE_UNQUOTED(RPM_VERSION, 303)],
+            AC_CHECK_LIB(rpm, rpmdbOpen,:,
+               AC_MSG_ERROR([can't find librpm (usually in rpm-devel package)]),
+            -lz -ldb),
+         -lz -ldb),
+      -lz -ldb),
+   -lz -ldb),
+)
+
+
+dnl Checks for header files.
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_SIZE_T
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS(strdup)
+
+AC_OUTPUT(Makefile config/Makefile)

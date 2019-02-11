@@ -1,0 +1,209 @@
+==============================================================================
+ PURP (Pugo RPM) Version 1.1.0 - A ncurses-based RPM-handler
+ Copyright (C) 1998-2001 -- Anders Karlsson <pugo@pugo.org>
+==============================================================================
+
+===========
+ Copyright 
+===========
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+    
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+	
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+
+============
+ About Purp
+============
+
+ Purp is a ncurses-based RPM-handler. The goal has been to provide 
+ an interactive and efficient way to handle RPM-packages on ordinary
+ text-terminals. 
+ 
+ RPM (RedHat Package Manager) is RedHats system for packaging, 
+ distribution, installation, upgrade and uninstallation of source
+ and binary software-distributions. Information about RPM can be
+ found at <http://www.rpm.org/>, and information about RedHat can
+ be found at <http://www.redhat.com/>.
+ 
+ The program has an interactive user interface with two panels 
+ showing installed and available packages. The panels can be
+ navigated either as the text-based WWW-client Lynx, or as file-
+ handle-systems as Midnight Commander. A third panel shows 
+ information about the currently selected package.  
+ 
+ The interface is controlled by short key-commands, which are 
+ shown and explained at the bottom of the screen. 
+
+ More information about Purp, and new versions are available at
+ this address: <http://www.lysator.liu.se/purp/>
+
+
+============
+ Installing
+============
+
+ Read the file INSTALL for installation instructions.
+     
+
+============
+ Usage info
+============
+
+ Starting Purp:
+ -------------------------------------------
+ Purp is normally started like this:
+ [root@pudas /root]# purp /mnt/redhat/contrib/i386/  
+
+ Where the only argument is the path to a directory containing RPM-
+ packages. If Purp is started without a path to a directory with
+ RPM-packages it will only show the installed packages, leaving the
+ other panel empty.
+
+ If the user that runs Purp isn't root, and therefore haven't 
+ write-permission for the RPM-database, then Purp will start
+ in a limited mode for normal users.
+
+ To see more information about options, use the option '--help':
+ [root@pudas /root]# purp --help
+ 
+ 
+ Navigating the packages:
+ -------------------------------------------
+ The packages are navigated by using the selection-bar, which is 
+ the bar that stands over one of the packages, and that can be
+ moved by the arrow-keys.
+ 
+ The following keys are used to move the selection-bar:
+ 
+         [TAB] - Switch panels (move bar to the other panel)
+
+    [Arrow up] - Move selection-bar one line up
+  [Arrow down] - Move selection-bar one line down
+ 
+     [Page Up] - Move selection-bar one page up
+   [Page Down] - Move selection-bar one page down
+ 
+ [Arrow right] - Move down into the currently selected folder
+  [Arrow left] - Move up, back to previous folder
+  
+       [Enter] - Enter the currently selected folder
+                 (Down if ordinary folder or up if it's '..')
+       
+      [Insert] - Mark the currently selected package for
+                 operations like install, upgrade or uninstall. 
+
+
+ 
+ Searching for packages:
+ -------------------------------------------
+ Purp now provides a simple search-function, that can search for
+ package-names. For the moment the search-function is very simple,
+ it only search for packages matching the name, not version- or 
+ release-number. You don't need to enter the whole package-name,
+ you can enter as many as needed to make it significant. 
+
+ To search for a package, you must first select the panel in which 
+ you want to search, for example if you want to search among your 
+ installed packages you place the cursor in the left panel. Then 
+ press 'S', enter a part of the package-name at the search-prompt, 
+ and finally press 'enter'.
+
+ A package-name is built like this:
+ 
+      name-version-release
+ 
+ Which means that if you want to search for the package
+ 'kernel-2.0.32-3', then you enter 'kern' at the search-prompt.
+ 
+ If Purp finds a matching package then it will navigate to that
+ package and place the cursor above it.
+
+
+
+Follow-command for easier navigation:
+ -------------------------------------------
+ Purp 0.3.0 introduced the Follow-command, which navigates the
+ panel that aren't active (the one without selection-bar) to the 
+ same folder (if available) in the hierarchy as the active panel.
+ 
+ For example if you stand in the folder "/utilities/system", in
+ then available-panel, and wants to see what packages you have 
+ installed in the same folder, then you can press "F" to 
+ autmatically navigate the installed-panel to "/utilities/system".
+ 
+
+
+ Performing RPM-operations:
+ -------------------------------------------
+ The operations that are available are shown at the command-line
+ at the bottom of the screen. For each command there is a letter
+ highlighted showing the key for that command. The command-line
+ alters to always show only the available commands.
+
+ Purp ofcourse supports the basic package-operations as installation,
+ upgrade and uninstallation of packages. Purp also have functions
+ to show detailed information about packages, for example lists 
+ of the files in a package, the scripts in a package, and the
+ dependencies for a package. All these operations are performed
+ by key-commands.
+
+
+
+ Redraw the screen:
+ -------------------------------------------
+ You can redraw the Purp-user-interface by pressing Ctrl-L.
+ 
+ 
+==================
+ Terminal devices
+==================
+ 
+ Purp has been tested on many different kinds of text-terminals,
+ and it seems to work on at least most of the ones tested. 
+ 
+ The minimum size of the terminal is 60 * 14. Ofcourse it's 
+ possible to run Purp on bigger terminals.
+
+ Purp uses color when available, for example on a Linux-
+ console when the environment-variable TERM is set to 
+ 'linux' or in a 'rxvt' or 'color-xterm' when TERM is set 
+ to 'xterm-color'.
+ 
+ 
+ 
+==================
+ More information
+==================
+ 
+ More information about Purp, and new versions are available at
+ the Purp-homepage: <http://www.lysator.liu.se/purp/>.
+
+ To contact the developer of Purp, Anders Karlsson, use the following
+ adresses. I prefer e-mail!
+
+====================================================================
+ Anders Karlsson              E-mail: <pugo@pugo.org>
+ Rydsvägen 246 C.36              WWW: <http://www.pugo.org/>
+ SE-58434 LINKÖPING
+ SWEDEN                       Lysator academic computer society:
+ Phone: +46-13-261010            WWW: <http://www.lysator.liu.se/>
+====================================================================
+     
+     
+ At last, some Gök-skötarna-cuckoos:
+
+       O>     O>     O>     O>     O>     O>     O>     O>     O> 
+     >(_)<  >(_)<  >(_)<  >(_)<  >(_)<  >(_)<  >(_)<  >(_)<  >(_)<
+     _/ \_  _/ \_  _/ \_  _/ \_  _/ \_  _/ \_  _/ \_  _/ \_  _/ \_
+

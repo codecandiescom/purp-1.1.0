@@ -1,0 +1,151 @@
+.\" purp \- a ncurses-based RPM-handler
+.TH purp 8 "27 May 2001" "Purp version 1.1.0/usr/local" "Purp (PugoRPM)"
+.SH NAME
+purp \- a ncurses-based RPM-handler
+.SH SYNOPSIS
+\fBpurp\fP [options] \fIpackages-path\fP
+.SH DESCRIPTION
+\fBpurp\fP is a ncurses-based \fIRPM-package-manager\fP. The goal has 
+been to provide an interactive and efficient way to handle RPM-packages 
+\fIon ordinary text-terminals\fP. 
+
+\fIRPM (RedHat Package Manager)\fP is RedHats system for packaging, 
+distribution, installation, upgrade and uninstallation of source
+and binary software-distributions. Information about RPM can be
+found at <http://www.rpm.org/>, and information about RedHat can
+be found at <http://www.redhat.com/>.
+ 
+The program has an \fIinteractive user interface\fP with two panels 
+showing installed and available packages. The panels can be
+navigated either as the text-based WWW-client Lynx, or as file-
+handle-systems as Midnight Commander. A third panel shows 
+information about the currently selected package.  
+ 
+The interface is controlled by short key-commands, which are 
+shown and explained at the bottom of the screen. 
+
+More information about Purp, and new versions is available at
+this address: <http://www.lysator.liu.se/purp/>
+
+
+.SH OPTIONS
+.TP
+.B "\-\-help"
+Give a short usage message containing available flags and quit.
+.TP
+.B "\-\-version"
+Print the version number and quit.
+.TP
+.B "\-a, \-\-all"
+Show all the RPM-packages in \fIpackages-path\fP. The default behaviour of
+purp is to show only those RPM-packages as available which aren't already
+installed. Using this option, already installed packages are shown as
+available, too, but in half bright video mode.
+.TP
+.B "\fIpackages-path\fP"
+A path to a directory containing RPM-packages.
+
+
+.SH KEYS - NAVIGATING THE PACKAGES
+Purp and the packages are navigated by using the selection-bar, which is 
+the bar that highlights one of the packages, and that which can be moved 
+by the arrow-keys.
+
+The following keys are used to move the selection-bar:
+.TP
+.B "[TAB]"
+Switch panels (move bar to the other panel)
+.TP
+.B "[Arrow up]"
+Move selection-bar one line up
+.TP
+.B "[Arrow down]"
+Move selection-bar one line down
+.TP
+.B "[Page Up]"
+Move selection-bar one page up
+.TP
+.B "[Page Down]"
+Move selection-bar one page down
+.TP
+.B "[Arrow right]"
+Move down into the currently selected folder
+.TP
+.B "[Arrow left]"
+Move up, back to previous folder
+.TP
+.B "[Enter]"
+Enter the currently selected folder
+(Down if ordinary folder or up if it's '..')
+.TP
+.B "[Insert]"
+Mark the currently selected package for
+operations like install, upgrade or uninstall. 
+		 
+		 
+.SH CONFIG FILE
+At startup Purp first looks for the file \fI~/.purprc\fP and if that 
+doesn't exist it looks for the global file \fI/etc/purprc\fP. With the 
+config file it's possible to change Purp in many ways. Look in the file
+for more information about the available settings.
+
+
+.SH NOTES
+More information about Purp and new versions will be available at 
+the Purp homepage at Lysator: <\fIhttp://www.lysator.liu.se/purp/\fP>
+
+
+.SH BUGS
+Some textpanels aren't scrollable, for example when listing scripts.
+Opening of RPM-directories with many files take lots of time, 
+this can be fixed by caching the package-info for the packages.
+
+Please send \fIbug reports\fP to <pugo@pugo.org>!
+
+.SH FILES
+.nf
+/usr/sbin/purp
+.nf
+/etc/purprc  - global config-file
+.nf
+~/.purprc    - personal config-file
+.fi
+.El
+
+.SH SEE ALSO
+.IR rpm (8) ,
+.IR glint (8) ,
+.B <http://www.lysator.liu.se/purp/>
+.nf
+
+
+.SH AUTHOR
+.nf
+Anders Karlsson <pugo@pugo.org>
+.fi
+
+.SH CONTRIBUTIONS
+You are very welcome if you want to contribute to Purp! Purp can be
+much better but I don't have time to do everything myself. If you
+want to help developing Purp, please contact Anders Karlsson <pugo@pugo.org>.
+
+Current contributors are except from myself mainly Ingo Brueckl
+which has sent several nice patches for the interface.
+
+.fi
+
+
+.SH COPYING
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
